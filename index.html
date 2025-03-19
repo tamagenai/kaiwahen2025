@@ -451,6 +451,13 @@
 
   <!-- <script src="./get_post_gss.js"></script> -->
   <script>
+    // ios 中国語音声不具合の訂正
+    // 2025/03/19
+    let voices = [];
+    // 初期音声リストの取得
+    voices = speechSynthesis.getVoices();
+    // 音声リストが取得できない場合は、音声リストが取得できるようになるまで待機
+    // 2025/03/19
     let osAndroid = false;
     let ua = window.navigator.userAgent.toLocaleLowerCase();
     if (ua.indexOf("android") !== -1) {
@@ -598,6 +605,17 @@
 
       var uttr = new SpeechSynthesisUtterance(td.textContent);
       uttr.lang = "zh-CN"
+      // ios 中国語音声不具合の訂正
+      // 利用可能な音声を確認
+      const voices = speechSynthesis.getVoices();
+      const chineseVoice = getChineseVoice();
+
+      if (chineseVoice) {
+        uttr.voice = chineseVoice;
+      } else {
+        console.warn('Chinese voice not found, using default voice.');
+      }
+      // ios 中国語音声不具合の訂正
       uttr.rate = speakSpeedRate();
       speechSynthesis.cancel();
       speechSynthesis.speak(uttr);
@@ -617,6 +635,17 @@
       if (quizPattern !== 'E') {
         var uttr = new SpeechSynthesisUtterance(td.textContent);
         uttr.lang = "zh-CN"
+        // ios 中国語音声不具合の訂正
+      // 利用可能な音声を確認
+      const voices = speechSynthesis.getVoices();
+      const chineseVoice = getChineseVoice();
+
+      if (chineseVoice) {
+        uttr.voice = chineseVoice;
+      } else {
+        console.warn('Chinese voice not found, using default voice.');
+      }
+      // ios 中国語音声不具合の訂正
         uttr.rate = speakSpeedRate();
         speechSynthesis.cancel();
         speechSynthesis.speak(uttr);
@@ -655,6 +684,17 @@
       const hanyuWords = questions[cssIndex][idxHanyu];
       var uttr = new SpeechSynthesisUtterance(hanyuWords);
       uttr.lang = "zh-CN"
+      // ios 中国語音声不具合の訂正
+      // 利用可能な音声を確認
+      const voices = speechSynthesis.getVoices();
+      const chineseVoice = getChineseVoice();
+
+      if (chineseVoice) {
+        uttr.voice = chineseVoice;
+      } else {
+        console.warn('Chinese voice not found, using default voice.');
+      }
+      // ios 中国語音声不具合の訂正
       uttr.rate = speakSpeedRate();
       speechSynthesis.cancel();
       speechSynthesis.speak(uttr);
@@ -1116,7 +1156,7 @@
       let wKaitou = lKaitou.split(cstSlash);
       if (wKaitou.length === 1) {
         lKaitou1 = wKaitou[0];
-        lKaitou2 = '好！赞👍';
+        lKaitou2 = '好！赞';
       } else {
         lKaitou1 = wKaitou[0];
         lKaitou2 = wKaitou[1];
@@ -1279,7 +1319,7 @@
           if (questions[cssIndex][idxPattern] === 'F') {
             if (pattertnF_Judge(inputHanyu.value, cssIndex)) {
               seikaiSu++;
-              comment.textContent = '好！赞👍';
+              comment.textContent = '好！赞';
             } else {
               comment.textContent = '错×　再加油！！';
 
@@ -1293,7 +1333,7 @@
             console.log(`hanyu=${hanyu}`);
             if (inputHanyu.value === hanyu) {
               seikaiSu++;
-              comment.textContent = '好！赞👍';
+              comment.textContent = '好！赞';
             } else {
               comment.textContent = '错×　再加油！！';
 
@@ -1308,7 +1348,7 @@
           let [whanyu, whAnswer] = hanyuHosei(hanyu, hAnswer);
           if (whanyu === whAnswer) {
             seikaiSu++;
-            comment.textContent = '好！赞👍';
+            comment.textContent = '好！赞';
           } else {
             comment.textContent = '错×　再加油！！';
 
@@ -1345,7 +1385,7 @@
 
           if (answerString === correctAnswer) {
 
-            comment.textContent = '好！赞👍';
+            comment.textContent = '好！赞';
             seikaiSu++;
             console.log('OK');
           } else {
@@ -1492,7 +1532,19 @@
 
     }
 
+    // ios 中国語音声不具合の訂正 2024-12-10
+    function getChineseVoice() {
+      if (voices.length === 0) {
+        voices = speechSynthesis.getVoices();
+      }
+      return voices.find(voice => voice.lang === 'zh-CN');
+    }
 
+    // 音声リストが更新されたときに再取得
+    speechSynthesis.onvoiceschanged = function () {
+      voices = speechSynthesis.getVoices();
+    };
+    // ios 中国語音声不具合の訂正 2024-12-10
 
 
     // イニシャル　書くシート用のCSS セット　　最初の問題に移る
