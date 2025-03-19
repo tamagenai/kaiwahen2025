@@ -1156,7 +1156,7 @@
       let wKaitou = lKaitou.split(cstSlash);
       if (wKaitou.length === 1) {
         lKaitou1 = wKaitou[0];
-        lKaitou2 = '好！赞';
+        lKaitou2 = '好！赞赞';
       } else {
         lKaitou1 = wKaitou[0];
         lKaitou2 = wKaitou[1];
@@ -1319,7 +1319,7 @@
           if (questions[cssIndex][idxPattern] === 'F') {
             if (pattertnF_Judge(inputHanyu.value, cssIndex)) {
               seikaiSu++;
-              comment.textContent = '好！赞';
+              comment.textContent = '好！赞赞';
             } else {
               comment.textContent = '错×　再加油！！';
 
@@ -1333,7 +1333,7 @@
             console.log(`hanyu=${hanyu}`);
             if (inputHanyu.value === hanyu) {
               seikaiSu++;
-              comment.textContent = '好！赞';
+              comment.textContent = '好！赞赞';
             } else {
               comment.textContent = '错×　再加油！！';
 
@@ -1348,7 +1348,7 @@
           let [whanyu, whAnswer] = hanyuHosei(hanyu, hAnswer);
           if (whanyu === whAnswer) {
             seikaiSu++;
-            comment.textContent = '好！赞';
+            comment.textContent = '好！赞赞';
           } else {
             comment.textContent = '错×　再加油！！';
 
@@ -1385,7 +1385,7 @@
 
           if (answerString === correctAnswer) {
 
-            comment.textContent = '好！赞';
+            comment.textContent = '好！赞赞';
             seikaiSu++;
             console.log('OK');
           } else {
